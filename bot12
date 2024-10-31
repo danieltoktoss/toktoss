@@ -1,0 +1,24 @@
+import random 
+import telebot
+bot = telebot.TeleBot('7722764483:AAF1AbYaen2rs7q_oJFrxlULRrtPJsddNiU')
+@bot.message_handler(commands=['mem'])
+def send_mem(message):
+    r = random.randint(1, 8)
+    with open(f'images/mem{r}.jpeg', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+        
+@bot.message_handler(commands=['anim_mem'])
+def send_anim_mem(message):
+    g = random.randint(1, 5)
+    with open(f'animal_mem/anim_mem{g}.png', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+
+
+
+@bot.message_handler(commands=["start"])
+def start(m, res=False):
+    bot.send_message(m.chat.id, 'Я на связи, Напишите мне что-нибудь ')
+@bot.message_handler(content_types=["text"])
+def handle_text(message):
+    bot.send_message(message.chat.id, 'Вы написали: ' + message.text)
+bot.polling(none_stop=True, interval=0)
